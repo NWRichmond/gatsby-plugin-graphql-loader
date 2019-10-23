@@ -1,15 +1,31 @@
 # gatsby-plugin-graphql-loader
 
-A Gatsby plugin for loading graphql and gql files with graphql-tag/loader.
+[![npm version](https://img.shields.io/npm/v/gatsby-plugin-graphql-loader.svg)](https://www.npmjs.com/package/gatsby-plugin-graphql-loader)
+[![GitHub issues](https://img.shields.io/github/issues/NWRichmond/gatsby-plugin-graphql-loader)](https://github.com/NWRichmond/gatsby-plugin-graphql-loader/issues)
+[![GitHub license](https://img.shields.io/github/license/NWRichmond/gatsby-plugin-graphql-loader)](https://github.com/NWRichmond/gatsby-plugin-graphql-loader/blob/master/LICENSE)
+
+A Gatsby plugin for loading `.graphql` and `.gql` files with the help of graphql-tag/loader.
+
+#### This is for:
+
+Loading queries for browser runtime GraphQL operations, such as with Apollo Client.
+
+#### This is not for:
+
+Loading queries used at build time.
+
+For more information on the distinction between runtime vs. build time, see the [Gatsby docs](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/).
 
 ## Installing
 
 The [graphql-tag](https://www.npmjs.com/package/graphql-tag) package needs to be installed alongside this plugin. To install both:
 
 ### Using Yarn
+
 `yarn add gatsby-plugin-graphql-loader graphql-tag`
 
 ### Using NPM
+
 `npm i gatsby-plugin-graphql-loader graphql-tag`
 
 ## Usage
@@ -18,9 +34,7 @@ Add the plugin to `gatsby-config.js`:
 
 ```js
 // In your gatsby-config.js
-plugins: [
-  `gatsby-plugin-graphql-loader`
-]
+plugins: [`gatsby-plugin-graphql-loader`];
 ```
 
 Now you can import `.graphql` and `.gql` files directly into your components.
@@ -46,13 +60,13 @@ In a component file (say, `/src/components/user-info.js`), import the query from
 
 ```js
 // user-info.js
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import GET_USER_COMMENTS from '../queries/get-comments-by-first-name.gql';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import GET_USER_COMMENTS from "../queries/get-comments-by-first-name.gql";
 
 const UserInfo = ({ firstname }) => {
   const { data, loading, error } = useQuery(GET_USER_COMMENTS, {
-    variables: { firstname },
+    variables: { firstname }
   });
   const user = !loading && !error ? data.users[0] : null;
   if (error) {
@@ -64,7 +78,7 @@ const UserInfo = ({ firstname }) => {
       <>
         <h3>First Name</h3>
         <p>{user.firstname}</p>
-        <h3>Comments</h3>{' '}
+        <h3>Comments</h3>{" "}
         {user.comments.map(({ text }) => (
           <p key={text.slice(0, 30)}>{text}</p>
         ))}
@@ -74,6 +88,4 @@ const UserInfo = ({ firstname }) => {
 };
 
 export { UserInfo };
-
 ```
-
