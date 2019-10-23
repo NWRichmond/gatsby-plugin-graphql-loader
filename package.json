@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-graphql-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Gatsby plugin for loading graphql and gql files, using apollographql/graphql-tag/loader.",
   "keywords": [
     "gatsby",
