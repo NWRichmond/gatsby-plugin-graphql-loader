@@ -46,6 +46,7 @@ A working example is show in [this GitHub repository](https://github.com/NWRichm
 Suppose you have `src/queries/get-comments-by-first-name.gql` which contains the following query:
 
 ```graphql
+# get-comments-by-first-name.gql
 query getUserComments($firstname: String!) {
   users(where: { firstname_eq: $firstname }) {
     firstname
@@ -68,7 +69,7 @@ const UserInfo = ({ firstname }) => {
   const { data, loading, error } = useQuery(GET_USER_COMMENTS, {
     variables: { firstname }
   });
-  const user = !loading && !error ? data.users[0] : null;
+  const [user] = !loading && !error ? data.users : [null];
   if (error) {
     return <p>Error Querying Data</p>;
   }
@@ -79,9 +80,11 @@ const UserInfo = ({ firstname }) => {
         <h3>First Name</h3>
         <p>{user.firstname}</p>
         <h3>Comments</h3>{" "}
-        {user.comments.map(({ text }) => (
-          <p key={text.slice(0, 30)}>{text}</p>
-        ))}
+        <ul>
+          {user.comments.map(({ text }, index) => (
+            <li key={`${text.slice(0, 10)}-${index}`}>{text}</li>
+          ))}
+        </ul>
       </>
     ))
   );
